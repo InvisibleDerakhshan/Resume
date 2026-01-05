@@ -1,0 +1,30 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <partial name="_MetaTags" />
+    <title>ادمین |@ViewData["Title"] </title>
+    <partial name="_HeaderRefrences" />
+
+</head>
+
+<body class="light rtl">
+    <partial name="_Loader" />
+    <!-- Overlay For Sidebars -->
+    <div class="overlay"></div>
+    <!-- #END# Overlay For Sidebars -->
+
+    <partial name="_TopNavBar" />
+
+    @await Component.InvokeAsync("LeftSideBar")
+
+    <section class="content">
+        <div class="container-fluid">
+            @RenderBody()
+        </div>
+    </section>
+    <partial name="_FooterRefrences" />
+</body>
+</html>
