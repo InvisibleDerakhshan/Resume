@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Resume.DAL.ViewModels.User
 {
-    internal class FilterUserViewModel
+    public class FilterUserViewModel
     {
     }
 }

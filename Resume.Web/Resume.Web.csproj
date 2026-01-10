@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Resume.Business\Resume.Business.csproj" />
+    <ProjectReference Include="..\Resume.DAL\Resume.DAL.csproj" />
   </ItemGroup>
 
   <ItemGroup>
