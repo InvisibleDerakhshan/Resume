@@ -36,7 +36,7 @@ namespace Resume.Business.Services.Implementation
             User user = new User()
             {
                 CreateDate = DateTime.Now,
-                Email = model.Email,
+                Email = model.Email.Trim().ToLower(),
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Mobile = model.Mobile,
@@ -49,6 +49,50 @@ namespace Resume.Business.Services.Implementation
 
             return CreateUserResult.Success;
         }
+
+        public async Task<EditUserViewModel> GetForEditById(int id)
+        {
+            var user = await _userRepository.GetbyIdAsync(id);
+
+            if (user == null)
+                return null;
+            
+            return new EditUserViewModel()
+            {
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Mobile = user.Mobile,
+                IsActive = user.IsActive,
+                Id = user.Id,
+            };
+        }
+
+        public async Task<EditUserResult> UpdateAsync(EditUserViewModel model)
+        {
+            var user =await _userRepository.GetbyIdAsync(model.Id);
+
+            if (user == null)
+                return EditUserResult.UserNotFound;
+
+            if (await _userRepository.DuplicatedEmailAsync(user.Id, user.Email.ToLower().Trim()))
+                return EditUserResult.Emailduplicated;
+
+            if (await _userRepository.DuplicatedMobileAsync(user.Id, user.Email))
+                return EditUserResult.MobileDublicated;
+
+            user.Email = model.Email;
+            user.Mobile = model.Mobile;
+            user.FirstName=model.FirstName;
+            user.LastName=model.LastName;
+            user.IsActive = model.IsActive;
+
+            _userRepository.Update(user);
+            await _userRepository.SaveAsync();
+
+            return EditUserResult.Success;
+        }
+
 
         #endregion
 

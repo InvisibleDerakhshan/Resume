@@ -15,6 +15,12 @@ namespace Resume.DAL.Repositories.Interface
 
         Task SaveAsync();
 
+        Task<User> GetbyIdAsync(int id);
+        Task<bool> DuplicatedEmailAsync(int id ,string email);
+        Task<bool> DuplicatedMobileAsync(int id ,string mobile);
+
+        void Update(User user); 
+
         #endregion
     }
 }

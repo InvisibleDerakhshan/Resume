@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Resume.Business.Services.Interface;
+using Resume.DAL.Models.User;
 using Resume.DAL.ViewModels.User;
 
 namespace Resume.Web.Areas.Admin.Controllers
@@ -53,14 +54,29 @@ namespace Resume.Web.Areas.Admin.Controllers
             }
             #endregion
 
+            var result = await _userService.CreateAsync(model);
+
+            #region CheckResult
+            switch (result)
+            {
+                case CreateUserResult.Success:
+                    break;
+                case CreateUserResult.Error:
+                    break;
+            }
+            #endregion
             return View();
         }
 
-        #endregion
+
 
         #region Update
         public async Task<IActionResult> Update(int id)
         {
+            var user = await _userService.GetForEditById(id);
+            if (user == null)
+                return NotFound();
+
             return View();
         }
 
@@ -75,8 +91,28 @@ namespace Resume.Web.Areas.Admin.Controllers
             }
             #endregion
 
+
+            var result = await _userService.UpdateAsync(model);
+
+            #region CheckResult
+            switch (result)
+            {
+                case EditUserResult.Success:
+                    break;
+                case EditUserResult.Error:
+                    break;
+                case EditUserResult.UserNotFound:
+                    break;
+                case EditUserResult.Emailduplicated:
+                    break;
+                case EditUserResult.MobileDublicated:
+                    break;
+            }
+            #endregion
             return View();
         }
+
+        #endregion
 
         #endregion
 

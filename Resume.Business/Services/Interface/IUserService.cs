@@ -13,6 +13,8 @@ namespace Resume.Business.Services.Interface
         #region Methods
 
         Task<CreateUserResult>  CreateAsync(CreateUserViewModel model);
+        Task<EditUserViewModel> GetForEditById(int  id);  
+        Task<EditUserResult> UpdateAsync(EditUserViewModel model);
 
         #endregion
     }
