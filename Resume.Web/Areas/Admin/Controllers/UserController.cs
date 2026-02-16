@@ -30,9 +30,10 @@ namespace Resume.Web.Areas.Admin.Controllers
 
         #region List
 
-        public async Task<IActionResult> List()
+        public async Task<IActionResult> List(FilterUserViewModel filter)
         {
-            return View();
+            var result =_userService.FilterAsync(filter);
+            return View(result);
         }
 
         #endregion

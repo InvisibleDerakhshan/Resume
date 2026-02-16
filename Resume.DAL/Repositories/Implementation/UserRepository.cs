@@ -2,6 +2,7 @@
 using Resume.DAL.Context;
 using Resume.DAL.Models.User;
 using Resume.DAL.Repositories.Interface;
+using Resume.DAL.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -59,6 +60,41 @@ namespace Resume.DAL.Repositories.Implementation
         {
             _context.Users.Update(user);
         }
+
+        public async Task<FilterUserViewModel> FilterAsync(FilterUserViewModel model)
+        {
+          var query =_context.Users.AsQueryable();
+
+            #region Filter 
+            if (!string.IsNullOrEmpty(model.Email))
+            {
+                query=query.Where(user => user.Email==model.Email);
+            }
+            if (!string.IsNullOrEmpty(model.Mobile))
+            {
+                query=query.Where(user => user.Mobile==model.Mobile);
+            }
+
+            #endregion
+
+            #region Paging
+
+          await  model.Paging(query.Select(user=>new UserDetailsViewModel()
+            {
+                CreateDate=user.CreateDate,
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName= user.LastName,
+                Email = user.Email,
+                Mobile = user.Mobile,
+                IsActive= user.IsActive,
+            }));
+
+            #endregion
+            return model;
+        }
+
+
         #endregion
 
     }

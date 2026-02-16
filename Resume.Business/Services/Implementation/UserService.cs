@@ -50,6 +50,8 @@ namespace Resume.Business.Services.Implementation
             return CreateUserResult.Success;
         }
 
+  
+
         public async Task<EditUserViewModel> GetForEditById(int id)
         {
             var user = await _userRepository.GetbyIdAsync(id);
@@ -93,7 +95,11 @@ namespace Resume.Business.Services.Implementation
             return EditUserResult.Success;
         }
 
-
+        public async Task<FilterUserViewModel> FilterAsync(FilterUserViewModel model)
+        {
+           return await _userRepository.FilterAsync(model);
+           
+        }
         #endregion
 
     }

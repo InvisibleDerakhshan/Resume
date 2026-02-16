@@ -15,6 +15,7 @@ namespace Resume.Business.Services.Interface
         Task<CreateUserResult>  CreateAsync(CreateUserViewModel model);
         Task<EditUserViewModel> GetForEditById(int  id);  
         Task<EditUserResult> UpdateAsync(EditUserViewModel model);
+        Task<FilterUserViewModel> FilterAsync(FilterUserViewModel model);//***
 
         #endregion
     }

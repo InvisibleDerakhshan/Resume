@@ -1,4 +1,5 @@
 ﻿using Resume.DAL.Models.User;
+using Resume.DAL.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,7 @@ namespace Resume.DAL.Repositories.Interface
         Task<bool> DuplicatedMobileAsync(int id ,string mobile);
 
         void Update(User user); 
+        Task<FilterUserViewModel>FilterAsync(FilterUserViewModel model);
 
         #endregion
     }
