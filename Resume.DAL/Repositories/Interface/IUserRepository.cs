@@ -17,6 +17,8 @@ namespace Resume.DAL.Repositories.Interface
         Task SaveAsync();
 
         Task<User> GetbyIdAsync(int id);
+        Task<User> GetByEmailAsync(string email );
+
         Task<bool> DuplicatedEmailAsync(int id ,string email);
         Task<bool> DuplicatedMobileAsync(int id ,string mobile);
 

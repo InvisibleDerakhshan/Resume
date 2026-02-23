@@ -1,4 +1,6 @@
-﻿using Resume.DAL.ViewModels.User;
+﻿using Resume.DAL.Models.User;
+using Resume.DAL.ViewModels.Account;
+using Resume.DAL.ViewModels.User;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +18,9 @@ namespace Resume.Business.Services.Interface
         Task<EditUserViewModel> GetForEditById(int  id);  
         Task<EditUserResult> UpdateAsync(EditUserViewModel model);
         Task<FilterUserViewModel> FilterAsync(FilterUserViewModel model);//***
+        Task<LoginResult> LoginAsync(LoginViewModel model);
 
+        Task<User> GetByEmailAsync(string email);
         #endregion
     }
 }

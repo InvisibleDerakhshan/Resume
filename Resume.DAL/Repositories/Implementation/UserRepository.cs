@@ -94,6 +94,12 @@ namespace Resume.DAL.Repositories.Implementation
             return model;
         }
 
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            return await _context.Users
+                  .FirstOrDefaultAsync(user => user.Email == email);
+        }
+
 
         #endregion
 

@@ -1,6 +1,7 @@
 ﻿using Resume.Business.Services.Interface;
 using Resume.DAL.Models.User;
 using Resume.DAL.Repositories.Interface;
+using Resume.DAL.ViewModels.Account;
 using Resume.DAL.ViewModels.User;
 using System;
 using System.Collections.Generic;
@@ -50,7 +51,7 @@ namespace Resume.Business.Services.Implementation
             return CreateUserResult.Success;
         }
 
-  
+
 
         public async Task<EditUserViewModel> GetForEditById(int id)
         {
@@ -58,7 +59,7 @@ namespace Resume.Business.Services.Implementation
 
             if (user == null)
                 return null;
-            
+
             return new EditUserViewModel()
             {
                 Email = user.Email,
@@ -72,7 +73,7 @@ namespace Resume.Business.Services.Implementation
 
         public async Task<EditUserResult> UpdateAsync(EditUserViewModel model)
         {
-            var user =await _userRepository.GetbyIdAsync(model.Id);
+            var user = await _userRepository.GetbyIdAsync(model.Id);
 
             if (user == null)
                 return EditUserResult.UserNotFound;
@@ -85,8 +86,8 @@ namespace Resume.Business.Services.Implementation
 
             user.Email = model.Email;
             user.Mobile = model.Mobile;
-            user.FirstName=model.FirstName;
-            user.LastName=model.LastName;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
             user.IsActive = model.IsActive;
 
             _userRepository.Update(user);
@@ -97,8 +98,35 @@ namespace Resume.Business.Services.Implementation
 
         public async Task<FilterUserViewModel> FilterAsync(FilterUserViewModel model)
         {
-           return await _userRepository.FilterAsync(model);
-           
+            return await _userRepository.FilterAsync(model);
+
+        }
+
+        public async Task<LoginResult> LoginAsync(LoginViewModel model)
+        {
+            model.Email = model.Email.Trim().ToLower();
+            var user = await _userRepository.GetByEmailAsync(model.Email);
+
+            if (user == null)
+            {
+                return LoginResult.UserNotFound;
+            }
+
+            string hashPassword = model.Password;
+
+            if (user.Password != hashPassword)
+            {
+                return LoginResult.UserNotFound;
+            }
+
+            return LoginResult.Success;
+
+        }
+
+        public async Task<User> GetByEmailAsync(string email)
+        {
+            email = email.Trim().ToLower();
+            return await _userRepository.GetByEmailAsync(email);
         }
         #endregion
 
