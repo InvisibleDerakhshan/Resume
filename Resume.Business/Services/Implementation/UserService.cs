@@ -1,4 +1,5 @@
-﻿using Resume.Business.Services.Interface;
+﻿using Resume.Business.Security;
+using Resume.Business.Services.Interface;
 using Resume.DAL.Models.User;
 using Resume.DAL.Repositories.Interface;
 using Resume.DAL.ViewModels.Account;
@@ -41,7 +42,7 @@ namespace Resume.Business.Services.Implementation
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 Mobile = model.Mobile,
-                Password = model.Password,
+                Password = model.Password.Trim().EncodePasswordMd5(),
                 IsActive = model.IsActive,
             };
 
@@ -112,7 +113,7 @@ namespace Resume.Business.Services.Implementation
                 return LoginResult.UserNotFound;
             }
 
-            string hashPassword = model.Password;
+            string hashPassword = model.Password.Trim().EncodePasswordMd5();
 
             if (user.Password != hashPassword)
             {

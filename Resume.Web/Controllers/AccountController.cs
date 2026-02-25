@@ -103,6 +103,7 @@ namespace Resume.Web.Controllers
 
         #region Logout
 
+        [HttpGet("/logout")]
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
