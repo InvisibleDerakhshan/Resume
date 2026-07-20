@@ -35,8 +35,11 @@ namespace Resume.Business.Services.Implementation
 
         public async Task<CreateUserResult> CreateAsync(CreateUserViewModel model)
         {
+            
             User user = new User()
             {
+               
+                
                 CreateDate = DateTime.Now,
                 Email = model.Email.Trim().ToLower(),
                 FirstName = model.FirstName,
@@ -46,6 +49,14 @@ namespace Resume.Business.Services.Implementation
                 IsActive = model.IsActive,
             };
 
+            
+            if (model.Email.Contains(user.Email) && model.Mobile.Contains(user.Mobile)) 
+            {
+               
+                return CreateUserResult.Error;
+               
+            }
+               
             await _userRepository.InsertAsync(user);
             await _userRepository.SaveAsync();
 
@@ -79,7 +90,7 @@ namespace Resume.Business.Services.Implementation
             if (user == null)
                 return EditUserResult.UserNotFound;
 
-            if (await _userRepository.DuplicatedEmailAsync(user.Id, user.Email.ToLower().Trim()))
+            if (await _userRepository.DuplicatedEmailAsync(user.Id, model.Email.ToLower().Trim()))
                 return EditUserResult.Emailduplicated;
 
             if (await _userRepository.DuplicatedMobileAsync(user.Id, user.Email))
@@ -129,7 +140,28 @@ namespace Resume.Business.Services.Implementation
             email = email.Trim().ToLower();
             return await _userRepository.GetByEmailAsync(email);
         }
-        #endregion
+
+        public async Task<UserDetailsViewModel> GetInformationAsync(int id)
+        {
+            var user = await _userRepository.GetbyIdAsync(id);
+
+            if (user == null)
+                return null;
+
+            return new UserDetailsViewModel()
+            {
+                CreateDate = user.CreateDate,
+                Email = user.Email,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Id = user.Id,
+                IsActive = user.IsActive,
+                Mobile = user.Mobile,
+            };
+
+        }
 
     }
+
+    #endregion
 }

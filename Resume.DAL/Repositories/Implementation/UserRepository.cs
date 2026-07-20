@@ -37,7 +37,7 @@ namespace Resume.DAL.Repositories.Implementation
        public async Task<User> GetbyIdAsync(int id)
         {
             return await _context.Users
-                .FirstOrDefaultAsync(user => user.Id == id);
+            .FirstOrDefaultAsync(user => user.Id == id);
         }
 
         public async Task SaveAsync()
@@ -68,11 +68,11 @@ namespace Resume.DAL.Repositories.Implementation
             #region Filter 
             if (!string.IsNullOrEmpty(model.Email))
             {
-                query=query.Where(user => user.Email==model.Email);
+                query=query.Where(user => EF.Functions.Like(user.Email,$"%{model.Email}%"));
             }
             if (!string.IsNullOrEmpty(model.Mobile))
             {
-                query=query.Where(user => user.Mobile==model.Mobile);
+                query=query.Where(user => EF.Functions.Like(user.Email, $"%{model.Mobile}%"));
             }
 
             #endregion

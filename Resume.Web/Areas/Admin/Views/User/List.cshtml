@@ -96,7 +96,12 @@
                                         }
                                     </td>
                                     <td>@user.CreateDate</td>
-                                    <td></td>
+                                    <td>
+                                        <a asp-action="Update" asp-route-id ="@user.Id">
+
+                                            <i class="fa fa-pen"></i>
+                                        </a>
+                                    </td>
 
                                 </tr>
                             }

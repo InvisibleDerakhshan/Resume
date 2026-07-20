@@ -21,6 +21,8 @@ namespace Resume.Business.Services.Interface
         Task<LoginResult> LoginAsync(LoginViewModel model);
 
         Task<User> GetByEmailAsync(string email);
+
+        Task<UserDetailsViewModel> GetInformationAsync(int id);
         #endregion
     }
 }

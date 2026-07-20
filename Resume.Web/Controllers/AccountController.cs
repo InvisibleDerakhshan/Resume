@@ -108,7 +108,7 @@ namespace Resume.Web.Controllers
         {
             await HttpContext.SignOutAsync();
             TempData[SuccessMessage] = "شما با موفقیت خارج شدید";
-            return RedirectToAction("Index","Home");
+            return RedirectToAction("Index", "Home");
         }
 
         #endregion

@@ -1,4 +1,6 @@
-﻿
+﻿@using Resume.Bussines.Extensions
+@using Resume.DAL.ViewModels.AboutMe
+@model ClientSideEditAboutMeviewModel
 
 <header class="header box">
     <div class="header__left">
@@ -8,8 +10,12 @@
           
         </div>
         <div class="header__base-info">
-            <h4 class="title titl--h4">ملیکا خلیلیان</h4>
-            <div class="status">کارگردان خلاق</div>
+            <h4 class="title titl--h4">@Model.FirstName @Model.LastName</h4>
+            @if (!string.IsNullOrEmpty(Model.Position))
+            {
+                <div class="status">@Model.Position</div>
+            }
+            
             <ul class="header__social">
                 <li><a href="https://www.facebook.com/"><i class="font-icon icon-facebook1"></i></a></li>
                 <li><a href="https://www.twitter.com/"><i class="font-icon icon-twitter1"></i></a></li>
@@ -19,12 +25,20 @@
     </div>
     <div class="header__right">
         <ul class="header__contact">
-            <li><span class="overhead">ایمیل</span>Melika.khaliliyan@gmail.com</li>
-            <li><span class="overhead">تلفن</span>09105552211</li>
+            <li><span class="overhead">ایمیل</span>@Model.Email</li>
+            <li><span class="overhead">تلفن</span>@Model.Mobile</li>
         </ul>
         <ul class="header__contact">
+
+            @if(Model.BirthDate.HasValue)
+            {
+                <li><span class="overhead">آدرس</span>@Model.BirthDate</li>
+            }
             <li><span class="overhead">تولد</span>9 بهمن 1375</li>
-            <li><span class="overhead">مکان تولد</span>شاهرود ایران</li>
+            @if (!string.IsNullOrEmpty(Model.Location))
+            {
+                <li><span class="overhead">آدرس</span>@Model.Location</li>
+            }
         </ul>
     </div>
 </header>

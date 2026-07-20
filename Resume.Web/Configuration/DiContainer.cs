@@ -2,6 +2,8 @@
 using Resume.DAL.Repositories.Implementation;
 using Resume.Business.Services.Interface;
 using Resume.Business.Services.Implementation;
+using Resume.Bussines.Services.Interfaces;
+using Resume.Bussines.Services.Implementation;
 
 
 namespace Resume.Web.Configuration
@@ -13,6 +15,8 @@ namespace Resume.Web.Configuration
             #region Repositories
 
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IContactUsRepository, ContactUsRepository>();
+            services.AddScoped<IAboutMeRepository, AboutMeRepository>();
 
             #endregion
 
@@ -20,6 +24,11 @@ namespace Resume.Web.Configuration
             #region Services
 
             services.AddScoped<IUserService,UserService>();
+            services.AddScoped<IContactUsService,ContactUsService>();
+            services.AddScoped<IAboutMeService,AboutMeService>();
+
+            services.AddScoped<IEmailService,EmailService>();
+            services.AddScoped<IViewRenderService,ViewRenderService>();
 
             #endregion
         }

@@ -1,4 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Resume.DAL.Models.AboutMe;
+using Resume.DAL.Models.ContactUs;
 using Resume.DAL.Models.User;
 using System;
 using System.Collections.Generic;
@@ -23,6 +25,34 @@ namespace Resume.DAL.Context
         #region DbSets
 
         public DbSet<User> Users { get; set; }
+        public DbSet<ContactUs> ContactUs { get; set; }
+        public DbSet<AboutMe> AboutMe { get; set; }
+
+        #endregion
+
+        #region MyRegion
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            #region Seed data
+
+            modelBuilder.Entity<User>()
+           .HasData(new User()
+           {
+               CreateDate = DateTime.Now,
+               Email = "alirezai.pro@gmail.com",
+               FirstName = "علی",
+               LastName = "رضائی",
+               Id = 1,
+               IsActive = true,
+               Mobile = "09367806232",
+               Password = "82-7C-CB-0E-EA-8A-70-6C-4C-34-A1-68-91-F8-4E-7B"
+           });
+
+
+            #endregion
+            base.OnModelCreating(modelBuilder);
+        }
 
         #endregion
     }

@@ -5,7 +5,7 @@ using Resume.DAL.ViewModels.User;
 
 namespace Resume.Web.Areas.Admin.Controllers
 {
-    public class UserController : Controller
+    public class UserController : AdminBaseController
     {
         #region Fields
 
@@ -32,7 +32,7 @@ namespace Resume.Web.Areas.Admin.Controllers
 
         public async Task<IActionResult> List(FilterUserViewModel filter)
         {
-            var result =_userService.FilterAsync(filter);
+            var result = await _userService.FilterAsync(filter);
             return View(result);
         }
 
@@ -61,12 +61,15 @@ namespace Resume.Web.Areas.Admin.Controllers
             switch (result)
             {
                 case CreateUserResult.Success:
-                    break;
+                    TempData[SuccessMessage] = "کاربر جدید با موفقیت افزوده شد";
+                    return RedirectToAction("List");
+                    
                 case CreateUserResult.Error:
+                    TempData[ErrorsMessage] = "خطایی رخ داده است";
                     break;
             }
             #endregion
-            return View();
+            return View(model);
         }
 
 
@@ -78,7 +81,7 @@ namespace Resume.Web.Areas.Admin.Controllers
             if (user == null)
                 return NotFound();
 
-            return View();
+            return View(user);
         }
 
         [HttpPost]
@@ -99,18 +102,24 @@ namespace Resume.Web.Areas.Admin.Controllers
             switch (result)
             {
                 case EditUserResult.Success:
-                    break;
+                    TempData[SuccessMessage] = "کاربر با موفقیت ویرایش شد";
+                    return RedirectToAction("List");
+                    
                 case EditUserResult.Error:
+                    TempData[ErrorsMessage] = "خطایی رخ داده است";
                     break;
                 case EditUserResult.UserNotFound:
+                    TempData[ErrorsMessage] = "کاربری پیدا نشد";
                     break;
                 case EditUserResult.Emailduplicated:
+                    TempData[ErrorsMessage] = "ایمیل تکراری است";
                     break;
                 case EditUserResult.MobileDublicated:
+                    TempData[ErrorsMessage] = "شماره موبایل تکراری است";
                     break;
             }
             #endregion
-            return View();
+            return View(model);
         }
 
         #endregion
